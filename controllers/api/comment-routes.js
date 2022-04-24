@@ -1,37 +1,42 @@
-const router = require("express").Router();
-const { Comment } = require("./models");
-const withAuth = require("./utils/auth");
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../../config/connection');
 
-router.post("/", withAuth, (req, res) => {
-  Comment.create({ ...req.body, userId: req.session.userId })
-    .then(newComment => {
-      res.json(newComment);
-    })
-    .catch(err => {
-      res.status(500).json(err);
-    });
-});
+class Comment extends Model {}
 
-router.get("/", (req, res) => {
-  Comment.findAll(req.body)
-    .then((dbCommentData) => res.json(dbCommentData))
-    .catch((err) => {
-      console.log(err);
-      res.status(400).json(err);
-    });
-});
-
-router.delete("/:id", (req, res) => {
-  Comment.destroy({
-    where: {
-      id: req.params.id,
+Comment.init(
+  {
+    // table columns
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
     },
-  })
-    .then((dbCommentData) => res.json(dbCommentData))
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-});
+    comment_content: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'user',
+        key: 'id'
+      }
+    },
+    post_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'post',
+        key: 'id'
+      }
+    }
+  },
+  {
+    sequelize,
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'comment'
+  }
+);
 
-module.exports = router;
+module.exports = Comment;

@@ -5,9 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "kill -9 $(lsof -ti:3000,3001) && npm start",
+    "start": "kill -9 $(lsof -ti:3000:3306) && npm start",
     "watch": "nodemon server.js",
-    "dev": "nodemon server"
+    "dev": "node server",
+    "mongoose": "mongod"
+
+
   },
   "repository": {
     "type": "git",
