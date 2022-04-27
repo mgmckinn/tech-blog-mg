@@ -38,14 +38,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(require("./controllers/"));
 
-<<<<<<< HEAD
-sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, () => console.log('Now listening'));
-});
-=======
 sequelize.sync({ force: false }).then(() => { 
    app.listen(PORT, () => 
 console.log(`App listening on port ${PORT}!`));
   
 })
->>>>>>> d4507403cca3d1266432ab01c9d27e1525578ba5

@@ -5,21 +5,18 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-<<<<<<< HEAD
+
     "start": "kill -9 $(lsof -ti:3000,3001) && npm start",
     "server": "node server.js",
     "dev": "nodemon server"
-=======
+
     "start": "kill -9 $(lsof -ti:3000:3306) && npm start",
     "watch": "nodemon server.js",
     "dev": "node server",
     "mongoose": "mongod"
-<<<<<<< HEAD
-=======
 
 
->>>>>>> aa0271ccc8ba6bee9695bd9a88dc000771bfa1bd
->>>>>>> d4507403cca3d1266432ab01c9d27e1525578ba5
+
   },
   "repository": {
     "type": "git",
