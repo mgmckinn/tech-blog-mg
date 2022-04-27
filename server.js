@@ -6,6 +6,16 @@ const app = express();
 const PORT = process.env.PORT || 3306;
 const sequelize = require("./config/connection");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
+
+
+
+sequelize.sync().then(function(){
+  console.log('DB connection sucessful.');
+}, 
+function(err) {
+  // catch error here
+  console.log(err);
+
 const sess = {
   secret: "Secret",
   cookie: {},
@@ -15,13 +25,10 @@ const sess = {
     db: sequelize,
   }),
 };
-const hbs = exphbs.create({
-  helpers: {
-    format_date: (date) => {
-      return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
-    },
-  },
 });
+
+const helpers = require('./utils/')
+const hbs = exphbs.create({helpers});
 
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
@@ -31,7 +38,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(require("./controllers/"));
 
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}!`);
-  sequelize.sync({ force: false });
+sequelize.sync({ force: false }).then(() => {
+  app.listen(PORT, () => console.log('Now listening'));
 });

@@ -9,8 +9,6 @@
     "watch": "nodemon server.js",
     "dev": "node server",
     "mongoose": "mongod"
-
-
   },
   "repository": {
     "type": "git",
